@@ -115,6 +115,18 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              href="/simulator"
+              className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors bg-cyan-500/10 border border-cyan-500/20 rounded-full px-3 py-1"
+            >
+              Giả lập đầu tư
+            </Link>
+            <Link
+              href="/report"
+              className="text-xs font-semibold text-zinc-300 hover:text-zinc-100 transition-colors bg-white/[0.04] border border-white/10 rounded-full px-3 py-1"
+            >
+              Báo cáo
+            </Link>
             <span className="text-xs text-zinc-400 bg-white/[0.03] border border-white/[0.08] rounded-full px-3 py-1 font-mono">
               Năm 2025
             </span>
@@ -144,7 +156,7 @@ export default function DashboardPage() {
               trendValue="↓ 5.2%"
             />
             <MetricCard
-              label="Cắt giảm vs Baseline"
+              label="Cắt giảm vs Baseline 2025"
               value="-55"
               unit="tCO₂e thực tế"
               trend="down"
@@ -311,12 +323,12 @@ export default function DashboardPage() {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                  <h2 className="text-zinc-50 font-bold text-lg">Danh Sách Carbon Hotspot Trọng Yếu</h2>
+                  <h2 className="text-zinc-50 font-bold text-lg">Danh Sách Carbon Hotspot (Trọng Yếu)</h2>
                 </div>
-                <p className="text-zinc-400 text-xs">Phát hiện tự động các điểm tập trung carbon cần ưu tiên xử lý</p>
+                <p className="text-zinc-400 text-xs">Xác định tự động theo cây phân tích Pareto: 20% nguồn phát thải chiếm &gt;80% tổng cường độ carbon</p>
               </div>
               <span className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-full px-3 py-1 font-mono font-semibold">
-                AI Detected
+                Phân tích tự động
               </span>
             </div>
             <div className="overflow-x-auto">

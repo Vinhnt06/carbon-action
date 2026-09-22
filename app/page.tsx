@@ -39,7 +39,7 @@ export default function LandingPage() {
                   href="/simulator"
                   className="inline-flex items-center gap-2 border border-zinc-600 hover:border-zinc-400 text-zinc-300 px-8 py-4 rounded-xl transition-colors"
                 >
-                  Action Simulator
+                  Giả lập đầu tư
                 </Link>
               </div>
             </div>

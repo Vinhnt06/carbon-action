@@ -27,7 +27,7 @@ const plans = [
     features: [
       "Không giới hạn nguồn phát thải",
       "Dashboard chuyên sâu + Hotspot Alert",
-      "Action Simulator theo ngân sách",
+      "Giả lập đầu tư theo ngân sách",
       "Kiểm kê Scope 1, Scope 2 & Scope 3",
       "Lập Action Plan chi tiết theo quý",
       "Xuất báo cáo PDF + Excel kiểm toán",
@@ -71,8 +71,8 @@ export default function Pricing() {
               Bảng Giá Thuê Bao <span className="gradient-emerald font-serif italic font-normal">Minh Bạch</span>
             </h2>
             <p className="text-zinc-400 text-base sm:text-lg">
-              Mô hình B2B SaaS theo năm tối ưu chi phí. Đạt điểm hòa vốn thương mại chỉ với{" "}
-              <span className="text-zinc-100 font-semibold underline decoration-emerald-500/40">20 doanh nghiệp</span> đăng ký.
+              Mô hình B2B SaaS theo năm tối ưu chi phí. Tối ưu hóa chi phí vận hành và thu hồi vốn đầu tư chỉ từ{" "}
+              <span className="text-zinc-100 font-semibold underline decoration-emerald-500/40">20 doanh nghiệp</span> đầu tiên.
             </p>
           </div>
         </ScrollReveal>

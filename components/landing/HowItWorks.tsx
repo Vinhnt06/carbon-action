@@ -36,14 +36,14 @@ const steps = [
   {
     id: "04",
     icon: FlowArrow,
-    name: "Carbon Hotspot",
+    name: "Carbon Hotspot (Điểm nóng phát thải)",
     desc: "Tự động phát hiện 20% nguồn phát thải lớn nhất chiếm 80% tác động để tối ưu nguồn lực.",
     color: "amber",
   },
   {
     id: "05",
     icon: Sliders,
-    name: "Action Simulator",
+    name: "Giả lập đầu tư",
     desc: "Mô phỏng bài toán đầu tư theo ngân sách — so sánh CO₂ cắt giảm, tiết kiệm OPEX và thời gian hoàn vốn.",
     color: "cyan",
   },

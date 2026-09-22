@@ -51,9 +51,39 @@ export default function ReportPage() {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              href="/simulator"
+              className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors bg-cyan-500/10 border border-cyan-500/20 rounded-full px-3 py-1"
+            >
+              Giả lập đầu tư
+            </Link>
             <span className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-full px-3 py-1 flex items-center gap-1">
               <Warning size={10} /> Báo cáo mẫu
             </span>
+            <button
+              onClick={() => {
+                const data = [
+                  ['Chỉ số', 'Giá trị', 'Đơn vị'],
+                  ['Tổng phát thải', '595', 'tCO₂e'],
+                  ['Cường độ carbon', '2.38', 'tCO₂e/tấn SP'],
+                  ['Cắt giảm vs Baseline 2025', '-55', 'tCO₂e'],
+                  ['Scope 1', '180', 'tCO₂e'],
+                  ['Scope 2', '320', 'tCO₂e'],
+                  ['Scope 3', '95', 'tCO₂e'],
+                ];
+                const csv = data.map(r => r.join(',')).join('\n');
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'carbon-report-2025.csv';
+                a.click();
+                URL.revokeObjectURL(url);
+              }}
+              className="text-xs border border-cyan-700 hover:border-cyan-500 text-cyan-400 hover:text-cyan-200 px-3 py-1.5 rounded-lg transition-colors"
+            >
+              Xuất CSV
+            </button>
             <button
               onClick={() => window.print()}
               className="text-xs border border-zinc-700 hover:border-zinc-500 text-zinc-400 hover:text-zinc-200 px-3 py-1.5 rounded-lg transition-colors"
@@ -165,7 +195,7 @@ export default function ReportPage() {
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800">
             <h3 className="text-zinc-50 font-semibold">Lộ trình hành động giảm phát thải</h3>
-            <p className="text-zinc-500 text-xs mt-1">Năm 2026 — theo quý, căn cứ kết quả Action Simulator</p>
+            <p className="text-zinc-500 text-xs mt-1">Action Plan 2026 — theo quý, căn cứ kết quả Giả lập đầu tư. Baseline hiện tại: 595 tCO₂e/năm (2025)</p>
           </div>
           <div className="p-6 space-y-4">
             {roadmap.map((q, i) => (

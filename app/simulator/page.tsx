@@ -88,7 +88,7 @@ export default function SimulatorPage() {
             <div>
               <p className="text-zinc-500 text-[10px] uppercase font-mono tracking-wider">Module 05</p>
               <h1 className="text-zinc-50 font-bold text-base sm:text-lg flex items-center gap-2">
-                <span>Action Simulator — Mô Phỏng Đầu Tư</span>
+                <span>Giả Lập Đầu Tư — Mô Phỏng Phương Án</span>
                 <SlidersHorizontal size={16} className="text-emerald-400" />
               </h1>
             </div>
@@ -98,10 +98,16 @@ export default function SimulatorPage() {
               href="/dashboard"
               className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1"
             >
-              Mở Dashboard
+              Dashboard
+            </Link>
+            <Link
+              href="/report"
+              className="text-xs font-semibold text-zinc-300 hover:text-zinc-100 transition-colors bg-white/[0.04] border border-white/10 rounded-full px-3 py-1"
+            >
+              Báo cáo
             </Link>
             <span className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-full px-3 py-1 flex items-center gap-1.5 font-mono">
-              <Warning size={12} /> Interactive Demo
+              <Warning size={12} /> Dữ liệu mô phỏng
             </span>
           </div>
         </div>
@@ -175,7 +181,9 @@ export default function SimulatorPage() {
               <div className="double-bezel rounded-[2.5rem] p-6 bg-white/[0.015] space-y-4">
                 <div>
                   <h2 className="text-zinc-50 font-bold text-base">Tổng Quan Portfolio Đề Xuất</h2>
-                  <p className="text-zinc-400 text-xs mt-0.5">Nếu triển khai toàn bộ {filteredAndSorted.length} phương án khả thi</p>
+                  <p className="text-zinc-400 text-xs mt-0.5">Action Plan 2026 — nếu triển khai toàn bộ {filteredAndSorted.length} phương án trong ngân sách
+                  </p>
+                  <p className="text-zinc-600 text-[10px] mt-1 font-mono">Baseline 2025: 595 tCO₂e | Mục tiêu 2026: giảm ≥20%</p>
                 </div>
                 <div className="space-y-3 pt-2">
                   {[
