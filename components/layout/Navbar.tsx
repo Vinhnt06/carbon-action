@@ -8,7 +8,7 @@ import { Leaf, List, X, ArrowRight } from "@phosphor-icons/react";
 const navLinks = [
   { label: "Tính năng", href: "/#features" },
   { label: "Dashboard Demo", href: "/dashboard" },
-  { label: "Simulator", href: "/simulator" },
+  { label: "Mô phỏng", href: "/simulator" },
   { label: "Báo cáo", href: "/report" },
 ];
 

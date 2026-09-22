@@ -72,7 +72,7 @@ export default function Pricing() {
             </h2>
             <p className="text-zinc-400 text-base sm:text-lg">
               Mô hình B2B SaaS theo năm tối ưu chi phí. Tối ưu hóa chi phí vận hành và thu hồi vốn đầu tư chỉ từ{" "}
-              <span className="text-zinc-100 font-semibold underline decoration-emerald-500/40">20 doanh nghiệp</span> đầu tiên.
+              <span className="text-zinc-100 font-semibold underline decoration-emerald-500/40">năm đầu tiên</span>.
             </p>
           </div>
         </ScrollReveal>

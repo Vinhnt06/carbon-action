@@ -27,7 +27,7 @@ export default function FeatureBento() {
               Tính năng thiết kế cho <span className="gradient-emerald font-serif italic font-normal">quyết định</span>, không chỉ báo cáo
             </h2>
             <p className="text-zinc-400 text-base sm:text-lg leading-relaxed">
-              Không dừng ở việc tính toán — Carbon Action tự động kết nối dữ liệu từ chuỗi cung ứng với các phương án giảm thải khả thi nhất.
+              Không chỉ dừng ở việc tính toán, Carbon Action tự động kết nối dữ liệu từ chuỗi cung ứng với các phương án giảm thải khả thi nhất.
             </p>
           </div>
         </ScrollReveal>
@@ -48,7 +48,7 @@ export default function FeatureBento() {
                     </div>
                     <h3 className="text-zinc-50 font-bold text-2xl tracking-tight">Carbon Dashboard</h3>
                     <p className="text-zinc-400 text-sm mt-1 max-w-md leading-relaxed">
-                      Toàn bộ bức tranh phát thải trên 1 màn hình trực quan — tổng quan, xu hướng theo tháng và phân rã theo Scope 1, 2, 3.
+                      Toàn bộ bức tranh phát thải trên 1 màn hình trực quan: tổng quan, xu hướng theo tháng và phân rã theo Scope 1, 2, 3.
                     </p>
                   </div>
                   <Link
@@ -122,7 +122,7 @@ export default function FeatureBento() {
                 <div className="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center mb-6">
                   <Crosshair size={20} className="text-amber-400" weight="duotone" />
                 </div>
-                <h3 className="text-zinc-50 font-bold text-2xl tracking-tight mb-2">Carbon Hotspot</h3>
+                <h3 className="text-zinc-50 font-bold text-2xl tracking-tight mb-2">Carbon Hotspot (Điểm nóng phát thải)</h3>
                 <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
                   Tự động phát hiện chính xác nguồn phát thải trọng yếu nhất để doanh nghiệp tập trung nguồn lực can thiệp.
                 </p>
@@ -165,7 +165,7 @@ export default function FeatureBento() {
                 <div className="w-10 h-10 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center mb-6">
                   <Sliders size={20} className="text-cyan-400" weight="duotone" />
                 </div>
-                <h3 className="text-zinc-50 font-bold text-2xl tracking-tight mb-2">Action Simulator</h3>
+                <h3 className="text-zinc-50 font-bold text-2xl tracking-tight mb-2">Giả Lập Đầu Tư</h3>
                 <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
                   Nhập ngân sách đầu tư → nhận ngay đề xuất danh mục hành động giảm carbon có ROI & Payback cao nhất.
                 </p>
@@ -195,7 +195,7 @@ export default function FeatureBento() {
                   href="/simulator"
                   className="inline-flex items-center gap-2 text-cyan-400 text-xs font-semibold hover:text-cyan-300 transition-colors"
                 >
-                  <span>Chạy Simulator Chi Tiết</span> <ArrowRight size={12} weight="bold" />
+                  <span>Khởi chạy mô phỏng chi tiết</span> <ArrowRight size={12} weight="bold" />
                 </Link>
               </div>
             </div>

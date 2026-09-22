@@ -164,3 +164,24 @@ export function rankByCO2(options: ActionOption[]): ActionOption[] {
 export function rankByPayback(options: ActionOption[]): ActionOption[] {
   return [...options].sort((a, b) => a.paybackYears - b.paybackYears);
 }
+
+// Thuật toán chọn danh mục tối ưu sao cho Tổng CapEx <= Ngân sách
+export function selectOptimizedPortfolio(
+  sortedOptions: ActionOption[],
+  budget: number
+): { portfolio: ActionOption[]; remaining: ActionOption[] } {
+  const portfolio: ActionOption[] = [];
+  const remaining: ActionOption[] = [];
+  let currentCapEx = 0;
+
+  for (const opt of sortedOptions) {
+    if (currentCapEx + opt.capex <= budget) {
+      portfolio.push(opt);
+      currentCapEx += opt.capex;
+    } else {
+      remaining.push(opt);
+    }
+  }
+
+  return { portfolio, remaining };
+}

@@ -9,7 +9,7 @@ import {
 const footerLinks = {
   product: [
     { label: "Dashboard Demo", href: "/dashboard" },
-    { label: "Action Simulator", href: "/simulator" },
+    { label: "Giả lập đầu tư", href: "/simulator" },
     { label: "Báo cáo Carbon", href: "/report" },
   ],
   company: [
@@ -36,7 +36,7 @@ export default function Footer() {
             </Link>
             <p className="text-zinc-400 text-sm leading-relaxed max-w-xs">
               Nền tảng ra quyết định giảm phát thải carbon cho doanh nghiệp SME
-              — từ đo lường đến hành động có ROI rõ ràng.
+              - từ đo lường đến hành động có ROI rõ ràng.
             </p>
             <div className="mt-6 flex items-center gap-2">
               <span className="text-xs text-zinc-600 bg-zinc-900 border border-zinc-800 rounded-full px-3 py-1">

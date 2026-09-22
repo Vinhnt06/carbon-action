@@ -16,6 +16,7 @@ import {
   rankByROI,
   rankByCO2,
   rankByPayback,
+  selectOptimizedPortfolio,
   calculateNPV,
 } from "@/lib/data/action-options";
 import {
@@ -27,6 +28,7 @@ import {
   ArrowLeft,
   ArrowRight,
   SlidersHorizontal,
+  CheckCircle,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -55,18 +57,20 @@ export default function SimulatorPage() {
   const [sortBy, setSortBy] = useState<"roi" | "co2" | "payback">("roi");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const filteredAndSorted = useMemo(() => {
+  const { portfolio, remaining } = useMemo(() => {
     const filtered = filterByBudget(actionOptions, budget);
-    if (sortBy === "roi") return rankByROI(filtered);
-    if (sortBy === "co2") return rankByCO2(filtered);
-    return rankByPayback(filtered);
+    let sorted = rankByROI(filtered);
+    if (sortBy === "co2") sorted = rankByCO2(filtered);
+    if (sortBy === "payback") sorted = rankByPayback(filtered);
+    return selectOptimizedPortfolio(sorted, budget);
   }, [budget, sortBy]);
 
-  const top3 = filteredAndSorted.slice(0, 3);
+  const allFiltered = useMemo(() => [...portfolio, ...remaining], [portfolio, remaining]);
+  const top3 = portfolio.slice(0, 3);
 
-  const totalCO2 = filteredAndSorted.reduce((s, a) => s + a.co2ReductionTpa, 0);
-  const totalSavings = filteredAndSorted.reduce((s, a) => s + a.annualOpexSavings, 0);
-  const totalCapex = filteredAndSorted.reduce((s, a) => s + a.capex, 0);
+  const totalCO2 = portfolio.reduce((s, a) => s + a.co2ReductionTpa, 0);
+  const totalSavings = portfolio.reduce((s, a) => s + a.annualOpexSavings, 0);
+  const totalCapex = portfolio.reduce((s, a) => s + a.capex, 0);
 
   const chartData = top3.map((a) => ({
     name: a.name.split(" ").slice(0, 3).join(" "),
@@ -181,7 +185,8 @@ export default function SimulatorPage() {
               <div className="double-bezel rounded-[2.5rem] p-6 bg-white/[0.015] space-y-4">
                 <div>
                   <h2 className="text-zinc-50 font-bold text-base">Tổng Quan Portfolio Đề Xuất</h2>
-                  <p className="text-zinc-400 text-xs mt-0.5">Action Plan 2026 — nếu triển khai toàn bộ {filteredAndSorted.length} phương án trong ngân sách
+                  <p className="text-zinc-400 text-xs mt-0.5">
+                    Action Plan 2026 — tự động chọn {portfolio.length} phương án tối ưu nhất trong ngân sách {budget}M VND
                   </p>
                   <p className="text-zinc-600 text-[10px] mt-1 font-mono">Baseline 2025: 595 tCO₂e | Mục tiêu 2026: giảm ≥20%</p>
                 </div>
@@ -189,7 +194,7 @@ export default function SimulatorPage() {
                   {[
                     { label: "Tổng CO₂ giảm / năm", val: `${totalCO2} tCO₂e`, color: "emerald" },
                     { label: "Tiết kiệm OPEX / năm", val: `${totalSavings}M VND`, color: "cyan" },
-                    { label: "Tổng CapEx đầu tư", val: `${totalCapex}M VND`, color: "zinc" },
+                    { label: "Tổng CapEx chọn", val: `${totalCapex}M / ${budget}M VND`, color: "emerald" },
                   ].map((m) => (
                     <div key={m.label} className="flex justify-between items-center bg-black/30 border border-white/[0.04] p-3 rounded-2xl">
                       <span className="text-zinc-400 text-xs">{m.label}</span>
@@ -219,14 +224,14 @@ export default function SimulatorPage() {
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h2 className="text-zinc-50 font-bold text-lg">
-                      Top {Math.min(3, filteredAndSorted.length)} Phương Án Tối Ưu Cho Ngân Sách {budget}M
+                      Top {Math.min(3, portfolio.length)} Phương Án Tối Ưu Cho Ngân Sách {budget}M
                     </h2>
                     <p className="text-zinc-400 text-xs mt-0.5">
                       So sánh hiệu quả cắt giảm CO₂ vs Số tiền OPEX tiết kiệm hàng năm
                     </p>
                   </div>
                   <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
-                    {filteredAndSorted.length} phương án khả thi
+                    {portfolio.length} phương án được chọn (Tổng CapEx {totalCapex}M ≤ {budget}M)
                   </span>
                 </div>
 
@@ -264,41 +269,56 @@ export default function SimulatorPage() {
             {/* Action Cards List */}
             <ScrollReveal delay={200}>
               <div className="space-y-4">
-                {filteredAndSorted.map((action) => (
-                  <div
-                    key={action.id}
-                    onClick={() => setSelectedId(selectedId === action.id ? null : action.id)}
-                    className={`double-bezel rounded-[2.5rem] p-6 cursor-pointer transition-all duration-300 ${
-                      selectedId === action.id
-                        ? "double-bezel-emerald bg-emerald-950/20 scale-[1.01]"
-                        : "bg-white/[0.015] hover:border-emerald-500/30"
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex items-start gap-4 flex-1">
-                        <div className="w-10 h-10 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-emerald-400 flex-shrink-0 mt-0.5">
-                          {categoryIcons[action.category]}
-                        </div>
-                        <div className="flex-1 min-w-0 space-y-1">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="text-zinc-50 font-bold text-base">{action.name}</h3>
-                            {action.tag && (
-                              <span className="text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full px-2.5 py-0.5 uppercase">
-                                {action.tag}
-                              </span>
-                            )}
-                            <span className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full border ${difficultyColors[action.difficulty]}`}>
-                              {difficultyLabels[action.difficulty]}
-                            </span>
+                {allFiltered.map((action) => {
+                  const isInPortfolio = portfolio.some((p) => p.id === action.id);
+                  return (
+                    <div
+                      key={action.id}
+                      onClick={() => setSelectedId(selectedId === action.id ? null : action.id)}
+                      className={`double-bezel rounded-[2.5rem] p-6 cursor-pointer transition-all duration-300 ${
+                        selectedId === action.id
+                          ? "double-bezel-emerald bg-emerald-950/20 scale-[1.01]"
+                          : isInPortfolio
+                          ? "bg-white/[0.02] border-emerald-500/30 hover:border-emerald-500/50"
+                          : "bg-white/[0.005] opacity-65 hover:opacity-100 hover:border-white/20"
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex items-start gap-4 flex-1">
+                          <div className={`w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                            isInPortfolio ? "bg-emerald-500/15 border border-emerald-500/30 text-emerald-400" : "bg-white/[0.04] border border-white/10 text-zinc-400"
+                          }`}>
+                            {categoryIcons[action.category]}
                           </div>
-                          <p className="text-zinc-400 text-xs leading-relaxed">{action.description}</p>
+                          <div className="flex-1 min-w-0 space-y-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h3 className="text-zinc-50 font-bold text-base">{action.name}</h3>
+                              {isInPortfolio ? (
+                                <span className="text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 rounded-full px-2.5 py-0.5 flex items-center gap-1">
+                                  <CheckCircle size={12} weight="fill" /> Được chọn vào danh mục
+                                </span>
+                              ) : (
+                                <span className="text-[10px] font-mono bg-zinc-800/80 text-zinc-400 border border-zinc-700/50 rounded-full px-2.5 py-0.5">
+                                  Vượt ngân sách tích lũy
+                                </span>
+                              )}
+                              {action.tag && (
+                                <span className="text-[10px] font-mono font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-full px-2.5 py-0.5 uppercase">
+                                  {action.tag}
+                                </span>
+                              )}
+                              <span className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full border ${difficultyColors[action.difficulty]}`}>
+                                {difficultyLabels[action.difficulty]}
+                              </span>
+                            </div>
+                            <p className="text-zinc-400 text-xs leading-relaxed">{action.description}</p>
+                          </div>
+                        </div>
+                        <div className="flex-shrink-0 text-right">
+                          <p className="text-zinc-50 font-mono font-bold text-lg">{action.capex}M</p>
+                          <p className="text-zinc-500 text-[10px] uppercase font-mono">CapEx Đầu Tư</p>
                         </div>
                       </div>
-                      <div className="flex-shrink-0 text-right">
-                        <p className="text-zinc-50 font-mono font-bold text-lg">{action.capex}M</p>
-                        <p className="text-zinc-500 text-[10px] uppercase font-mono">CapEx Đầu Tư</p>
-                      </div>
-                    </div>
 
                     {/* Metrics row */}
                     <div className="mt-5 grid grid-cols-3 gap-3 pt-4 border-t border-white/[0.06]">
@@ -355,9 +375,10 @@ export default function SimulatorPage() {
                       </div>
                     )}
                   </div>
-                ))}
-              </div>
-            </ScrollReveal>
+                );
+              })}
+            </div>
+          </ScrollReveal>
           </div>
         </div>
       </div>

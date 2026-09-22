@@ -22,6 +22,7 @@ import {
   Warning,
   Leaf,
   ArrowLeft,
+  Download,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -96,6 +97,29 @@ function MetricCard({
 
 export default function DashboardPage() {
   const total = summaryMetrics.totalEmissions;
+
+  const handleExportHotspots = () => {
+    const headers = ["#", "Nguồn phát thải", "Phân loại Scope", "tCO2e/năm", "% Đóng góp", "Xu hướng", "Hệ số EF", "Nguồn tham chiếu"];
+    const rows = hotspots.map((h) => [
+      h.rank,
+      `"${h.source}"`,
+      `"${h.scope}"`,
+      h.emissions,
+      `${h.pct}%`,
+      `${h.trendPct}%`,
+      `"${h.ef}"`,
+      `"${h.efSource}"`,
+    ]);
+    const csvContent =
+      "data:text/csv;charset=utf-8,\uFEFF" + [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "Carbon_Hotspots_Export_2025.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="min-h-screen bg-[#0f1416] text-zinc-100 pb-20">
@@ -327,9 +351,18 @@ export default function DashboardPage() {
                 </div>
                 <p className="text-zinc-400 text-xs">Xác định tự động theo cây phân tích Pareto: 20% nguồn phát thải chiếm &gt;80% tổng cường độ carbon</p>
               </div>
-              <span className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-full px-3 py-1 font-mono font-semibold">
-                Phân tích tự động
-              </span>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleExportHotspots}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-full px-3.5 py-1.5 transition-all shadow-sm"
+                >
+                  <Download size={14} weight="bold" />
+                  <span>Export to Excel/PDF</span>
+                </button>
+                <span className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-full px-3 py-1 font-mono font-semibold">
+                  Phân tích tự động
+                </span>
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left">

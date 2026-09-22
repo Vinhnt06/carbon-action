@@ -166,7 +166,7 @@ export default function Hero() {
               </h1>
               <p className="mt-6 text-base sm:text-lg text-zinc-400 leading-relaxed max-w-xl font-normal">
                 Nền tảng đo lường & mô phỏng chuyên sâu giúp doanh nghiệp SME tự động xác định{" "}
-                <span className="text-zinc-100 font-medium underline decoration-emerald-500/40 underline-offset-4">carbon hotspot</span>,
+                <span className="text-zinc-100 font-medium underline decoration-emerald-500/40 underline-offset-4">carbon hotspot (điểm nóng phát thải)</span>,
                 tối ưu phương án giảm thải và ra quyết định đầu tư xanh minh bạch.
               </p>
             </ScrollReveal>
@@ -188,7 +188,7 @@ export default function Hero() {
                   className="inline-flex items-center gap-2.5 border border-white/10 hover:border-emerald-500/40 bg-white/[0.02] hover:bg-white/[0.05] text-zinc-200 hover:text-white px-7 py-3.5 rounded-full backdrop-blur-md transition-all duration-300 text-sm"
                 >
                   <Play size={16} weight="fill" className="text-emerald-400" />
-                  <span>Chạy Simulator</span>
+                  <span>Khởi chạy mô phỏng</span>
                 </Link>
               </div>
             </ScrollReveal>
