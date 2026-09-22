@@ -150,7 +150,7 @@ export default function Hero() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
                 <span className="text-emerald-400 text-xs font-semibold tracking-wide uppercase font-mono">
-                  Gen G 2026 · Giải Pháp Đột Phá
+                  Nền Tảng Quản Trị Carbon B2B
                 </span>
               </div>
             </ScrollReveal>
